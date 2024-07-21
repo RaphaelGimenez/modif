@@ -1,8 +1,7 @@
 # nextjs dockerfile with dev step. package manager is pnpm
-FROM node:20 as modif-build
+FROM node:20 as modif
 
 WORKDIR /app
-
 
 RUN apt-get -qq update && \
     apt-get -qq dist-upgrade && \

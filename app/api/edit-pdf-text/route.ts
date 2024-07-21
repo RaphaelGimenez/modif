@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
   try {
     await execa("mkdir", [basePath]);
   } catch (error) {
-    console.log("Director{ sed }y already exists");
+    console.log("Directory already exists");
   }
 
   // Write file to the filesystem in tmp
@@ -63,13 +63,10 @@ export async function POST(request: NextRequest) {
   // uncompress pdf file
   await execa("pdftk", [path, "output", uncompressPath, "uncompress"]);
 
-  // escape special characters in text to unix code
-  function escapeRegExp(string: string) {
-    return string.replace(/[.*+?^${}/()|[\]\\]/g, "\\$&"); // $& means the whole matched string
-  }
+  let escapedText = text.replaceAll("/", "\\/");
+  const escapedModification = modification.replaceAll("/", "\\/");
 
-  let escapedText = escapeRegExp(text);
-  const escapedModification = escapeRegExp(modification);
+  console.log(escapedText, escapedModification);
 
   try {
     execSync(
